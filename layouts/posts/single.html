@@ -1,14 +1,37 @@
 {{ define "main" }}
 
 <article>
-    <h1>{{ .Title }}</h1>
+  <h1>{{ .Title }}</h1>
 
-    {{ if .Params.toc }}
-        <aside {{ if .Params.tocBorder }} class="toc" {{ end }}>
-            {{ .TableOfContents }}
-        </aside>
-    {{ end }}
+  <div id="image-container"></div>
 
-    {{ .Content }}
+  <script>
+    async function fetchImage() {
+      const response = await fetch(
+        "https://my-worker.zachary-a-seligman497.workers.dev/"
+      );
+      console.log(response);
+      if (response.ok) {
+        const img = document.createElement("img");
+        img.src = URL.createObjectURL(await response.blob());
+        img.alt = "Hatsune Miku";
+        document.getElementById("image-container").innerHTML = "";
+        document.getElementById("image-container").appendChild(img);
+      } else {
+        document.getElementById("image-container").textContent =
+          "Failed to load image.";
+      }
+    }
+
+    if (document.title === "ooo eee ooo") {
+      fetchImage();
+    }
+  </script>
+
+  {{ if .Params.toc }}
+  <aside {{ if .Params.tocBorder }} class="toc" {{ end }}>
+    {{ .TableOfContents }}
+  </aside>
+  {{ end }} {{ .Content }}
 </article>
 {{ end }}
