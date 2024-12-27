@@ -1,6 +1,6 @@
 
 [[entries]]
-title = "daily"
+title = "Main"
 
   [entries.post_list]
-  show_more_url = "posts"
+  show_more_url = "main"
